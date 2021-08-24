@@ -5,6 +5,12 @@
   "author": "Jeffrey van den Hondel",
   "license": "MIT",
   "main": "lib/index.js",
+  "keywords": [
+    "gridsome",
+    "gridsome-plugin",
+    "gridsome-source",
+    "confluence"
+  ],
   "scripts": {
     "develop": "tsc --watch",
     "build": "tsc"
