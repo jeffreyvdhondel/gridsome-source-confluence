@@ -7,6 +7,7 @@ export interface IConfig {
   debug?: boolean;
   public_only?: boolean;
   rate_limit?: boolean;
+  download_images?: boolean;
 }
 
 export interface SpacesResponse extends BaseResponse {

@@ -48,8 +48,10 @@ class ConfluenceSource {
 
       await this.setSlugs();
 
-      await this.createDownloadLinks();
-      await this.downloadAttachments();
+      if (this.config.download_images) {
+        await this.createDownloadLinks();
+        await this.downloadAttachments();
+      }
 
       await this.resolveLinks();
 

@@ -32,6 +32,7 @@ module.exports = {
         debug: true,
         public_only: true,
         rate_limit: true 
+        download_images: true
       }
     }
   ],
@@ -46,6 +47,7 @@ module.exports = {
 | `space_key` | Force spaceKey(s) comma separated | - | "AX,BG" | <input type="checkbox" disabled /> |
 | `public_only` | Only retrieve public confluence pages | false | false | <input type="checkbox" disabled /> |
 | `prefix` | Prefix of all types | Confluence | false | <input type="checkbox" disabled /> |
+| `download_images` | Download images and replace img url | false | true | <input type="checkbox" disabled /> |
 | `username` | Username for the private confluence page | - | johndoe@atlassian.net | required if public_only is false|
 | `password` | Password for the private confluence page | - | supersecretpassword | required if public_only is false|
 | `rate_limit` | Rate limit request (max concurrent 50) | false | true |<input type="checkbox" disabled /> |
