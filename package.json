@@ -1,11 +1,13 @@
 {
   "name": "gridsome-source-confluence",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Confluence source for Gridsome",
   "author": "Jeffrey van den Hondel",
   "license": "MIT",
   "main": "lib/index.js",
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "keywords": [
     "gridsome",
     "gridsome-plugin",
