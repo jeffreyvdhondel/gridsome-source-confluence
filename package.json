@@ -5,6 +5,7 @@
   "author": "Jeffrey van den Hondel",
   "license": "MIT",
   "main": "lib/index.js",
+  "files": ["lib"],
   "keywords": [
     "gridsome",
     "gridsome-plugin",
@@ -13,7 +14,8 @@
   ],
   "scripts": {
     "develop": "tsc --watch",
-    "build": "tsc"
+    "build": "tsc",
+    "prepublish": "yarn build"
   },
   "dependencies": {
     "axios": "^0.21.1",
