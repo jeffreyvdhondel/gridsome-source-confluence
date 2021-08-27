@@ -101,6 +101,7 @@ export interface ISpaces {
     space: string;
     title: string;
     body: string;
+    description?: string;
     slug?: string;
     parent_page?: string;
   }>;

@@ -53,7 +53,7 @@ class ConfluenceSource {
         await this.downloadAttachments();
       }
 
-      await this.resolveLinks();
+      await this.alterBody();
 
       await this.createNodes();
 
@@ -183,24 +183,31 @@ class ConfluenceSource {
     }
   }
 
-  async resolveLinks() {
-    this.log("Resolve Links");
+  async alterBody() {
+    this.log("Alter Body");
     this.spaces.forEach((space) => {
       space.pages.forEach((page) => {
         const htmlRoot = htmlParser(page.body);
-        //internal urls
         htmlRoot.querySelectorAll("a").forEach((a) => {
+          //Internal urls
           if (a.getAttribute("data-linked-resource-type") == "page") {
             const contentId = a.getAttribute("data-linked-resource-id");
             if (contentId) {
               const slug = this.createSlug(space.key, contentId);
               a.replaceWith(`<a href="${slug}/">${a.text}</a>`);
             }
+            //External urls
           } else if (a.getAttribute("class") == "external-link") {
             a.setAttribute("target", `_blank`);
           }
         });
-        //replace images
+
+        const description = htmlRoot.querySelector("p").innerText;
+        if (description) {
+          page.description = description.substr(0, 200);
+        }
+
+        //Replace images
         htmlRoot.querySelectorAll("img").forEach((img) => {
           if (img.hasAttribute("data-media-id")) {
             const attachmentIndex = space.attachments.findIndex((att) => att.id === img.getAttribute("data-media-id"));
