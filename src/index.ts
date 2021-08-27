@@ -196,6 +196,8 @@ class ConfluenceSource {
               const slug = this.createSlug(space.key, contentId);
               a.replaceWith(`<a href="${slug}/">${a.text}</a>`);
             }
+          } else if (a.getAttribute("class") == "external-link") {
+            a.setAttribute("target", `_blank`);
           }
         });
         //replace images
