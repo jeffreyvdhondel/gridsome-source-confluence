@@ -133,6 +133,7 @@ class ConfluenceSource {
             space: res.space.key,
             title: res.title,
             body: res.body.view.value,
+            position: res.extensions.position,
             labels: res.metadata.labels.results.map((label) => label.name),
           });
         });
@@ -175,6 +176,7 @@ class ConfluenceSource {
                 title: res.title,
                 body: res.body.view.value,
                 parent_page: parentPageId,
+                position: res.extensions.position,
                 labels: res.metadata.labels.results.map((label) => label.name),
               });
               //Fill the array with new ids because there can be more childs

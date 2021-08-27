@@ -81,6 +81,9 @@ export interface ContentResponse extends BaseResponse {
         ];
       };
     };
+    extensions: {
+      position: number;
+    };
   }>;
 }
 
@@ -117,6 +120,7 @@ export interface ISpaces {
     slug?: string;
     parent_page?: string;
     labels?: Array<string>;
+    position: number;
   }>;
   attachments: Array<IAttachment>;
 }
