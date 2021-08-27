@@ -70,7 +70,7 @@ export default class Confluence {
   }
 
   GetContentChildPage(id: string): Promise<AxiosResponse<ContentResponse>> {
-    return this.axios.get(`/wiki/rest/api/content/${id}/child/page`, { params: { expand: "body.view,space" } });
+    return this.axios.get(`/wiki/rest/api/content/${id}/child/page`, { params: { expand: "body.view,space,metadata.labels" } });
   }
 
   GetContentChildAttachment(id: string): Promise<AxiosResponse<AttachmentResponse>> {

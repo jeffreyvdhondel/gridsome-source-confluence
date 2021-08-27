@@ -127,11 +127,13 @@ class ConfluenceSource {
           this.log(`Parent Page: ${res.title}`);
           //Add ids so we can use them in childpage step
           const spaceIndex = this.spaces.findIndex((space) => space.key === res.space.key);
+
           this.spaces[spaceIndex].pages.push({
             id: res.id,
             space: res.space.key,
             title: res.title,
             body: res.body.view.value,
+            labels: res.metadata.labels.results.map((label) => label.name),
           });
         });
       });
@@ -173,6 +175,7 @@ class ConfluenceSource {
                 title: res.title,
                 body: res.body.view.value,
                 parent_page: parentPageId,
+                labels: res.metadata.labels.results.map((label) => label.name),
               });
               //Fill the array with new ids because there can be more childs
               pages.push(res.id);

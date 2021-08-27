@@ -69,6 +69,18 @@ export interface ContentResponse extends BaseResponse {
         value: string;
       };
     };
+    metadata: {
+      labels: {
+        results: [
+          {
+            prefix: string;
+            name: string;
+            id: string;
+            label: string;
+          }
+        ];
+      };
+    };
   }>;
 }
 
@@ -104,6 +116,7 @@ export interface ISpaces {
     description?: string;
     slug?: string;
     parent_page?: string;
+    labels?: Array<string>;
   }>;
   attachments: Array<IAttachment>;
 }
