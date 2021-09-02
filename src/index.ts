@@ -128,6 +128,10 @@ class ConfluenceSource {
         this.log(`Homepage: ${el.data.title}`);
         //Add ids so we can use them in childpage step
         const spaceIndex = this.spaces.findIndex((space) => space.key === el.data.space.key);
+        let labels = el.data.metadata.labels.results.map((label) => label.name);
+        if (labels.length === 0) {
+          labels = [""];
+        }
 
         this.spaces[spaceIndex].pages.push({
           id: el.data.id,
@@ -136,7 +140,10 @@ class ConfluenceSource {
           title: el.data.title,
           body: el.data.body.view.value,
           position: el.data.extensions.position,
-          labels: el.data.metadata.labels.results.map((label) => label.name),
+          anchor: [],
+          description: "",
+          slug: "",
+          labels: labels,
         });
       });
     });
@@ -154,6 +161,10 @@ class ConfluenceSource {
           this.log(`Parent Page: ${res.title}`);
           //Add ids so we can use them in childpage step
           const spaceIndex = this.spaces.findIndex((space) => space.key === res.space.key);
+          let labels = res.metadata.labels.results.map((label) => label.name);
+          if (labels.length === 0) {
+            labels = [""];
+          }
 
           this.spaces[spaceIndex].pages.push({
             id: res.id,
@@ -161,7 +172,10 @@ class ConfluenceSource {
             title: res.title,
             body: res.body.view.value,
             position: res.extensions.position,
-            labels: res.metadata.labels.results.map((label) => label.name),
+            anchor: [],
+            description: "",
+            slug: "",
+            labels: labels,
           });
         });
       });
@@ -197,6 +211,11 @@ class ConfluenceSource {
 
             //Check if the id is not found
             if (!this.spaces[spaceIndex].pages.find((page) => page.id === res.id)) {
+              let labels = res.metadata.labels.results.map((label) => label.name);
+              if (labels.length === 0) {
+                labels = [""];
+              }
+
               this.spaces[spaceIndex].pages.push({
                 id: res.id,
                 space: res.space.key,
@@ -204,7 +223,10 @@ class ConfluenceSource {
                 body: res.body.view.value,
                 parent_page: parentPageId,
                 position: res.extensions.position,
-                labels: res.metadata.labels.results.map((label) => label.name),
+                anchor: [],
+                description: "",
+                slug: "",
+                labels: labels,
               });
               //Fill the array with new ids because there can be more childs
               pages.push(res.id);
@@ -252,6 +274,15 @@ class ConfluenceSource {
             heading_size: header.tagName,
           };
         });
+
+        if (page.anchor.length === 0) {
+          page.anchor.push({
+            title: "",
+            position: 0,
+            anchor: "",
+            heading_size: "",
+          });
+        }
 
         //Replace images
         htmlRoot.querySelectorAll("img").forEach((img) => {

@@ -137,12 +137,12 @@ export interface ISpaces {
     space: string;
     title: string;
     body: string;
-    description?: string;
-    slug?: string;
+    description: string;
+    slug: string;
     homepage?: boolean;
-    anchor?: Array<IAnchor>;
+    anchor: Array<IAnchor>;
     parent_page?: string;
-    labels?: Array<string>;
+    labels: Array<string>;
     position: number;
   }>;
   attachments: Array<IAttachment>;
