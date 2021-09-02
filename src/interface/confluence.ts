@@ -118,6 +118,7 @@ export interface ISpaces {
     body: string;
     description?: string;
     slug?: string;
+    anchor?: Array<IAnchor>;
     parent_page?: string;
     labels?: Array<string>;
     position: number;
@@ -134,6 +135,12 @@ export interface IPage {
   parent_page?: string;
 }
 
+export interface IAnchor {
+  title: string;
+  anchor: string;
+  position: number;
+  heading_size: string;
+}
 export interface IAttachment {
   id: string;
   content_id: string;
