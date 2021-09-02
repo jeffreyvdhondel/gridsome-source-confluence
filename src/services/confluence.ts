@@ -66,7 +66,7 @@ export default class Confluence {
   }
 
   GetContentById(id: string): Promise<AxiosResponse<ContentIdResponse>> {
-    return this.axios.get(`/wiki/rest/api/content/${id}`);
+    return this.axios.get(`/wiki/rest/api/content/${id}`, { params: { expand: "body.view,space,metadata.labels" } });
   }
 
   GetContentChildPage(id: string): Promise<AxiosResponse<ContentResponse>> {

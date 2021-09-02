@@ -92,6 +92,27 @@ export interface ContentIdResponse {
   type: ContentType;
   status: Status;
   title: string;
+  space: SpaceReponse;
+  body: {
+    view: {
+      value: string;
+    };
+  };
+  metadata: {
+    labels: {
+      results: [
+        {
+          prefix: string;
+          name: string;
+          id: string;
+          label: string;
+        }
+      ];
+    };
+  };
+  extensions: {
+    position: number;
+  };
 }
 
 interface BaseResponse {
@@ -118,6 +139,7 @@ export interface ISpaces {
     body: string;
     description?: string;
     slug?: string;
+    homepage?: boolean;
     anchor?: Array<IAnchor>;
     parent_page?: string;
     labels?: Array<string>;

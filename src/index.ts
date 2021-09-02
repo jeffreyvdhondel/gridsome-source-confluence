@@ -40,9 +40,11 @@ class ConfluenceSource {
       await this.getSpaces(config.space_key);
 
       //Create collection
+      action.addCollection(this.getTypeName("Home"));
       action.addCollection(this.getTypeName("Parent"));
       action.addCollection(this.getTypeName("Child"));
 
+      await this.getHomepage();
       await this.getParentPages();
       await this.getChildPages();
 
@@ -113,6 +115,31 @@ class ConfluenceSource {
       });
     }
     this.spaces = returnSpaces;
+  }
+
+  async getHomepage() {
+    this.log("Get Homepage");
+    const axiosResponse = this.spaces.map((space) => {
+      return this.confluence.GetContentById(space.content_id);
+    });
+
+    return Promise.all(axiosResponse).then((res) => {
+      res.forEach((el) => {
+        this.log(`Homepage: ${el.data.title}`);
+        //Add ids so we can use them in childpage step
+        const spaceIndex = this.spaces.findIndex((space) => space.key === el.data.space.key);
+
+        this.spaces[spaceIndex].pages.push({
+          id: el.data.id,
+          homepage: true,
+          space: el.data.space.key,
+          title: el.data.title,
+          body: el.data.body.view.value,
+          position: el.data.extensions.position,
+          labels: el.data.metadata.labels.results.map((label) => label.name),
+        });
+      });
+    });
   }
 
   async getParentPages() {
@@ -272,7 +299,6 @@ class ConfluenceSource {
             //Only download images
             if (!fileExtension) {
               //Try to guesse the file type based on mimetype
-              console.log(fileName);
               return;
             }
             const spaceIndex = this.spaces.findIndex((space) => space.key === attachment.space.key);
@@ -409,6 +435,12 @@ class ConfluenceSource {
           //ChildPage
           const childCollection = this.gridsomeStore.getCollection(this.getTypeName("Child"));
           childCollection.addNode({
+            ...page,
+          });
+        } else if (page.homepage) {
+          //HomePage
+          const homeCollection = this.gridsomeStore.getCollection(this.getTypeName("Home"));
+          homeCollection.addNode({
             ...page,
           });
         } else {
