@@ -207,9 +207,9 @@ class ConfluenceSource {
           }
         });
 
-        const description = htmlRoot.querySelector("p").innerText;
-        if (description) {
-          page.description = description.substr(0, 200);
+        const querySelectP = htmlRoot.querySelector("p");
+        if (querySelectP && querySelectP.innerHTML) {
+          page.description = querySelectP.innerHTML.substr(0, 200);
         }
 
         //Replace images
