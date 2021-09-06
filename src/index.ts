@@ -248,7 +248,7 @@ class ConfluenceSource {
             const contentId = a.getAttribute("data-linked-resource-id");
             if (contentId) {
               const slug = this.createSlug(space.key, contentId);
-              a.replaceWith(`<a href="${slug}/">${a.text}</a>`);
+              a.replaceWith(`<a href="${slug}/">${a.innerHTML}</a>`);
             }
             //External urls
           } else if (a.getAttribute("class") == "external-link") {
