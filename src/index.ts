@@ -263,12 +263,12 @@ class ConfluenceSource {
         }
 
         //Create anchor
-        const headers = htmlRoot.querySelectorAll("h1,h2,h3,h4,h5,h6");
+        const headers = htmlRoot.querySelectorAll("h1,h2,h3,h4,h5,h6,h7");
         page.anchor = headers.map((header, headerIndex) => {
-          const anchorSlug = slugify(header.rawText, { trim: true, lower: true, remove: /[*+~./()'"!?:@]/g });
+          const anchorSlug = slugify(header.text, { trim: true, lower: true, remove: /[*+~./()&'"!?:@]/g });
           header.setAttribute("id", anchorSlug);
           return {
-            title: header.rawText,
+            title: header.text,
             position: headerIndex,
             anchor: anchorSlug,
             heading_size: header.tagName,
