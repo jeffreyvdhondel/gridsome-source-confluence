@@ -264,16 +264,32 @@ class ConfluenceSource {
 
         //Create anchor
         const headers = htmlRoot.querySelectorAll("h1,h2,h3,h4,h5,h6,h7");
-        page.anchor = headers.map((header, headerIndex) => {
+
+        const anchor = headers.map((header, headerIndex) => {
           const anchorSlug = slugify(header.text, { trim: true, lower: true, remove: /[*+~./()&'"!?:@]/g });
           header.setAttribute("id", anchorSlug);
           return {
             title: header.text,
-            position: headerIndex,
+            position: headerIndex + 1,
             anchor: anchorSlug,
             heading_size: header.tagName,
           };
         });
+
+        //Add title as postion 0
+        const titleSlug = slugify(page.title, { trim: true, lower: true, remove: /[*+~./()&'"!?:@]/g });
+        htmlRoot.insertAdjacentHTML("afterbegin", `<h1 id="${titleSlug}">${page.title}</h1>`);
+
+        //Combine the 2 anchor arrays
+        page.anchor = [
+          {
+            title: page.title,
+            position: 0,
+            anchor: titleSlug,
+            heading_size: "H1",
+          },
+          ...anchor,
+        ];
 
         if (page.anchor.length === 0) {
           page.anchor.push({
