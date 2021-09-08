@@ -266,7 +266,7 @@ class ConfluenceSource {
         const headers = htmlRoot.querySelectorAll("h1,h2,h3,h4,h5,h6,h7");
 
         const anchor = headers.map((header, headerIndex) => {
-          const anchorSlug = slugify(header.text, { trim: true, lower: true, remove: /[*+~./()&'"!?:@]/g });
+          const anchorSlug = `id-${slugify(header.text, { trim: true, lower: true, remove: /[*+~./()&'"!?:@]/g })}`;
           header.setAttribute("id", anchorSlug);
           return {
             title: header.text,
@@ -277,7 +277,7 @@ class ConfluenceSource {
         });
 
         //Add title as postion 0
-        const titleSlug = slugify(page.title, { trim: true, lower: true, remove: /[*+~./()&'"!?:@]/g });
+        const titleSlug = `id-${slugify(page.title, { trim: true, lower: true, remove: /[*+~./()&'"!?:@]/g })}`;
         htmlRoot.insertAdjacentHTML("afterbegin", `<h1 id="${titleSlug}">${page.title}</h1>`);
 
         //Combine the 2 anchor arrays
