@@ -66,11 +66,11 @@ export default class Confluence {
   }
 
   GetContentById(id: string): Promise<AxiosResponse<ContentIdResponse>> {
-    return this.axios.get(`/wiki/rest/api/content/${id}`, { params: { expand: "body.view,space,metadata.labels" } });
+    return this.axios.get(`/wiki/rest/api/content/${id}`, { params: { expand: "body.view,space,metadata.labels,history.lastUpdated" } });
   }
 
   GetContentChildPage(id: string): Promise<AxiosResponse<ContentResponse>> {
-    return this.axios.get(`/wiki/rest/api/content/${id}/child/page`, { params: { expand: "body.view,space,metadata.labels" } });
+    return this.axios.get(`/wiki/rest/api/content/${id}/child/page`, { params: { expand: "body.view,space,metadata.labels,history.lastUpdated" } });
   }
 
   GetContentChildAttachment(id: string): Promise<AxiosResponse<AttachmentResponse>> {

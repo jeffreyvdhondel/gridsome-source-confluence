@@ -64,6 +64,7 @@ export interface ContentResponse extends BaseResponse {
     status: Status;
     title: string;
     space: SpaceReponse;
+	history: IHistory;
     body: {
       view: {
         value: string;
@@ -98,6 +99,7 @@ export interface ContentIdResponse {
       value: string;
     };
   };
+  history: IHistory;
   metadata: {
     labels: {
       results: [
@@ -137,6 +139,8 @@ export interface ISpaces {
     space: string;
     title: string;
     body: string;
+	created_date: string;
+	modified_date: string;
     description: string;
     slug: string;
     homepage?: boolean;
@@ -172,6 +176,31 @@ export interface IAttachment {
   downloaded: boolean;
   file_size: number;
   space_key: string;
+}
+
+export interface ILastUpdated {
+	when: string;
+	friendlyWhen: string;
+	message: string;
+	number: number;
+	minorEdit: boolean;
+	syncRev: string;
+	syncRevSource: string;
+	confRev: string;
+	contentTypeModified: boolean;
+}
+
+export interface IExpandable {
+	previousVersion: string;
+	contributors: string;
+	nextVersion: string;
+}
+export interface IHistory {
+	lastUpdated: ILastUpdated
+	latest: boolean;
+	createdDate: string;
+	_expandable: IExpandable;
+	_links: Links
 }
 
 export enum SpacesType {

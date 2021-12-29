@@ -125,7 +125,7 @@ class ConfluenceSource {
 
     return Promise.all(axiosResponse).then((res) => {
       res.forEach((el) => {
-        this.log(`Homepage: ${el.data.title}`);
+		this.log(`Homepage: ${el.data.title}`);
         //Add ids so we can use them in childpage step
         const spaceIndex = this.spaces.findIndex((space) => space.key === el.data.space.key);
         let labels = el.data.metadata.labels.results.map((label) => label.name);
@@ -137,6 +137,8 @@ class ConfluenceSource {
           id: el.data.id,
           homepage: true,
           space: el.data.space.key,
+          created_date: el.data.history.createdDate,
+          modified_date: el.data.history.lastUpdated.when,
           title: el.data.title,
           body: el.data.body.view.value,
           position: el.data.extensions.position,
@@ -154,7 +156,6 @@ class ConfluenceSource {
     const axiosResponse = this.spaces.map((space) => {
       return this.confluence.GetContentChildPage(space.content_id);
     });
-
     return Promise.all(axiosResponse).then((res) => {
       res.forEach((el) => {
         el.data.results.forEach(async (res) => {
@@ -170,7 +171,9 @@ class ConfluenceSource {
             id: res.id,
             space: res.space.key,
             title: res.title,
-            body: res.body.view.value,
+			created_date: res.history.createdDate,
+			modified_date: res.history.lastUpdated.when,
+			body: res.body.view.value,
             position: res.extensions.position,
             anchor: [],
             description: "",
@@ -220,7 +223,9 @@ class ConfluenceSource {
                 id: res.id,
                 space: res.space.key,
                 title: res.title,
-                body: res.body.view.value,
+				created_date: res.history.createdDate,
+				modified_date: res.history.lastUpdated.when,
+				body: res.body.view.value,
                 parent_page: parentPageId,
                 position: res.extensions.position,
                 anchor: [],
