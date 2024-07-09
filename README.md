@@ -31,7 +31,7 @@ module.exports = {
         space_key: "AS",
         debug: true,
         public_only: true,
-        rate_limit: true 
+        retry_request: true 
         download_images: true
       }
     }
@@ -50,7 +50,7 @@ module.exports = {
 | `download_images` | Download images and replace img url | false | true | <input type="checkbox" disabled /> |
 | `username` | Username for the private confluence page | - | johndoe@atlassian.net | required if public_only is false|
 | `password` | Password for the private confluence page | - | supersecretpassword | required if public_only is false|
-| `rate_limit` | Rate limit request (max concurrent 50) | false | true |<input type="checkbox" disabled /> |
+| `retry_request` | Retry failed request | false | true |<input type="checkbox" disabled /> |
 | `debug` | Show debug information | false | true | <input type="checkbox" disabled /> |
 
 

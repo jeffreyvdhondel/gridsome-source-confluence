@@ -6,7 +6,7 @@ export interface IConfig {
   prefix?: string;
   debug?: boolean;
   public_only?: boolean;
-  rate_limit?: boolean;
+  retry_request?: boolean;
   download_images?: boolean;
 }
 

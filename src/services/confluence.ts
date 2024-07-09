@@ -1,10 +1,7 @@
-import Axios, { AxiosInstance, AxiosResponse } from "axios";
+import Axios, { AxiosError, AxiosInstance, AxiosResponse } from "axios";
 
 import { IConfig, SpacesResponse, SpaceReponse, ContentResponse, ContentIdResponse, AttachmentResponse } from "../interface/confluence";
-
-const MAX_REQUESTS_COUNT = 50;
-const INTERVAL_MS = 10;
-let PENDING_REQUESTS = 0;
+import axiosRetry from "axios-retry";
 
 export default class Confluence {
   axios: AxiosInstance;
@@ -24,36 +21,18 @@ export default class Confluence {
     }
     this.axios = Axios.create(axiosConfig);
 
-    //https://gist.github.com/matthewsuan/2bdc9e7f459d5b073d58d1ebc0613169
     /**
-     * Axios Request Interceptor
+     * Axios retry configuration
      */
-    if (this.config.rate_limit) {
-      this.axios.interceptors.request.use(function (config) {
-        return new Promise((resolve) => {
-          const interval = setInterval(() => {
-            if (PENDING_REQUESTS < MAX_REQUESTS_COUNT) {
-              PENDING_REQUESTS++;
-              clearInterval(interval);
-              resolve(config);
-            }
-          }, INTERVAL_MS);
-        });
-      });
-
-      /**
-       * Axios Response Interceptor
-       */
-      this.axios.interceptors.response.use(
-        function (response) {
-          PENDING_REQUESTS = Math.max(0, PENDING_REQUESTS - 1);
-          return Promise.resolve(response);
+    if (this.config.retry_request) {
+      axiosRetry(this.axios, {
+        retries: 15,
+        retryCondition: (e: AxiosError) => {
+          console.log("[Confluence]", 'To many request, retrying...');
+          return e.response?.status === 429;
         },
-        function (error) {
-          PENDING_REQUESTS = Math.max(0, PENDING_REQUESTS - 1);
-          return Promise.reject(error);
-        }
-      );
+        retryDelay: axiosRetry.exponentialDelay,
+      });
     }
   }
 
