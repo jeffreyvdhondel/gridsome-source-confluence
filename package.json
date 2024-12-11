@@ -1,6 +1,6 @@
 {
     "name": "gridsome-source-confluence",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Confluence source for Gridsome",
     "author": "Jeffrey van den Hondel",
     "license": "MIT",
