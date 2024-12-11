@@ -253,7 +253,7 @@ class ConfluenceSource {
             const contentId = a.getAttribute("data-linked-resource-id");
             if (contentId) {
               const slug = this.createSlug(space.key, contentId);
-              a.replaceWith(`<a href="${slug}">${a.innerHTML}</a>`);
+              a.replaceWith(`<a href="${slug}/">${a.innerHTML}</a>`);
             }
             //External urls
           } else if (a.getAttribute("class") == "external-link") {
@@ -455,7 +455,7 @@ class ConfluenceSource {
     while (!done) {
       const page = this.spaces[spaceIndex].pages.filter((page) => page.id == id);
       if (page.length === 1) {
-        slug = `/${slugify(page[0].title, { trim: true, lower: true, remove: /[*+~./()'"!?:@]/g })}${slug}/`; // https://gridsome.org/docs/linking/#link-between-pages
+        slug = `/${slugify(page[0].title, { trim: true, lower: true, remove: /[*+~./()'"!?:@]/g })}${slug}`;
         if (page[0].parent_page) {
           id = page[0].parent_page;
           continue;
